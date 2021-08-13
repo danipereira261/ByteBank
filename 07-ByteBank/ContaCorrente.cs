@@ -5,14 +5,25 @@ namespace _07_ByteBank
     public class ContaCorrente
     {
         public static double TaxaOperacao { get; set; }
-
         public Cliente Titular { get; set; }
+        public int Numero { get; private set; }
 
-        public static int TotalDeContasCriadas { get; private set; }
-
-        public int Agencia { get; set; }
-        public int Numero { get; set; }
-
+        private int _agencia;
+        public int Agencia
+        {
+            get
+            {
+                return _agencia;
+            }
+            private set
+            {
+                if (value <= 0)
+                {
+                    return;
+                }
+                _agencia = value;
+            }
+        }
         private double _saldo = 100;
 
         public double Saldo
@@ -30,6 +41,7 @@ namespace _07_ByteBank
                 }
             }
         }
+        public static int TotalDeContasCriadas { get; private set; }
 
         public ContaCorrente(int agencia, int numero)
         {
@@ -38,7 +50,7 @@ namespace _07_ByteBank
 
             TaxaOperacao = 30 / TotalDeContasCriadas;
 
-           TotalDeContasCriadas++;
+            TotalDeContasCriadas++;
         }
 
         public bool Sacar(double valor)
@@ -62,7 +74,6 @@ namespace _07_ByteBank
             if (this._saldo < valor)
             {
                 return false;
-
             }
 
             this._saldo -= valor;
